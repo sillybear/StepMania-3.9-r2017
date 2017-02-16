@@ -1,0 +1,24 @@
+		[----StepMania 3.9 r2017 Changes----]		
+
+		       //--- 2017-February ---//
+[ScreenGameplay & ScreenEdit]
+  - Fixed Assist Tick start time bug by adding global song offset seconds to it
+
+[ScreenEdit]
+  - bpm and stop numbers in notefield has no trailing decimal zero now.
+
+[NotesWriterSM & NotesWriterDWI]
+  - These will not output in sm:
+	> metadata with blank values (sm and dwi)
+	> metadata with default values (when OFFSET is 0 and/or SELECTABLE is YES)
+  - All numbers (except step data) have no trailing zeroes. Decimal precision for beat seconds is 5 while others (bpm, numSeconds & groove radar data) is 3.
+  - removed measure number tags
+  - removed -nosongbg- in BGCHANGES
+  - default BGCHANGES value is changed from
+	0=[movie file]=1,1,1,0 to 
+	0=[movie file]=1,0,0,0
+
+[Others]
+  - changed default sample music length from 12 to 15
+  - removed possible banner lookup conditions. This fixed the bug
+    where jacket image is loaded when the song has no banner.
