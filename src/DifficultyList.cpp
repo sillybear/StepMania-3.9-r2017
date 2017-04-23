@@ -12,16 +12,19 @@
 #include "StepsUtil.h"
 #include "CommonMetrics.h"
 
-#define ITEMS_SPACING_Y			THEME->GetMetricF(m_sName,"ItemsSpacingY")
+#define ITEMS_SPACING_Y				THEME->GetMetricF(m_sName,"ItemsSpacingY")
 #define DESCRIPTION_MAX_WIDTH		THEME->GetMetricF(m_sName,"DescriptionMaxWidth")
-#define NUM_SHOWN_ITEMS			THEME->GetMetricI(m_sName,"NumShownItems")
-#define MOVE_COMMAND			THEME->GetMetric (m_sName,"MoveCommand")
+#define NUM_SHOWN_ITEMS				THEME->GetMetricI(m_sName,"NumShownItems")
+#define MOVE_COMMAND				THEME->GetMetric (m_sName,"MoveCommand")
 #define CAPITALIZE_DIFFICULTY_NAMES	THEME->GetMetric (m_sName,"CapitalizeDifficultyNames" )		
-#define DEFAULT_METERS			THEME->GetMetric (m_sName,"DefaultMeterValues" )
+#define DEFAULT_METERS				THEME->GetMetric (m_sName,"DefaultMeterValues" )
 
 #define HIDDEN_DIFFICULTY_STRING	THEME->GetMetric ("DifficultyMeter","HiddenDifficultyCharacters")
 
-#define MAX_METERS NUM_DIFFICULTIES + MAX_EDITS_PER_SONG
+#define MAX_METERS					NUM_DIFFICULTIES + MAX_EDITS_PER_SONG
+
+#define METER_COLOR_A				THEME->GetMetricC("DifficultyMeter","MeterColorA")
+#define METER_COLOR_B				THEME->GetMetricC("DifficultyMeter","MeterColorB")
 
 DifficultyList::DifficultyList()
 {
@@ -302,7 +305,7 @@ void DifficultyList::SetFromGameState( bool bForceUpdate )
 				m_Lines[i].m_Description.SetDiffuseColor( SONGMAN->GetDifficultyColor(d) );
 
 				m_Lines[i].m_Number.SetZoomX(1);
-				m_Lines[i].m_Number.SetDiffuseColor( SONGMAN->GetDifficultyColor(d) );
+				//m_Lines[i].m_Number.SetDiffuseColor( SONGMAN->GetDifficultyColor(d) );
 				m_Lines[i].m_Number.SetText( "?" );
 			}
 		}
@@ -336,7 +339,12 @@ void DifficultyList::SetFromGameState( bool bForceUpdate )
 				m_Lines[i].m_Description.SetDiffuseColor( SONGMAN->GetDifficultyColor(row.m_dc) );
 				
 				m_Lines[i].m_Number.SetZoomX(1);
-				m_Lines[i].m_Number.SetDiffuseColor( SONGMAN->GetDifficultyColor(row.m_dc) );
+				//m_Lines[i].m_Number.SetDiffuseColor( SONGMAN->GetDifficultyColor(row.m_dc) );
+				
+				if( row.m_Steps->GetMeter() <= 10 )
+					m_Lines[i].m_Number.SetDiffuseColor( RageColor(METER_COLOR_A) );
+				else
+					m_Lines[i].m_Number.SetDiffuseColor( RageColor(METER_COLOR_B) );
 
 				Steps *pSteps = m_Rows[i].m_Steps;
 

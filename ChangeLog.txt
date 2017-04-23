@@ -22,3 +22,25 @@
   - changed default sample music length from 12 to 15
   - removed possible banner lookup conditions. This fixed the bug
     where jacket image is loaded when the song has no banner.
+
+----------------------------------------
+[How to compile SM3.9 r2017 using MVS 2005 Professional]
+- Open MVS 2005, open StepMania.sln
+- Proceed through the pages of the Conversion Wizard:
+  Next > No > Finish > Close
+- Go to Project > Properties, Configuration Properties > C/C++ > Language
+  > Treat wchar_t as built-in type > No
+- Switch to the Release configuration:
+  Build > Configuration Manager.
+  Change the Active Solution Configuration to Release.
+  Click Close.
+  (Note: You should use DSDK June 2010 from here forward)
+- Tools > Options > Projects and Solution > VC++ Directories:
+  --Show directories for "Include files":
+    >>> Add a location of your DSDK\Include folder on top
+  --Show directories for "Library files":
+    >>> Add a location of your DSDK\Lib folder on top
+- In Solution Explorer, select StepMania > Properties then
+  Configuration Properties > C/C++ > Preprocessor
+  Add _CRT_SECURE_NO_DEPRECATE in Preprocessor Definition
+- Build > Build Solution (or press F7)

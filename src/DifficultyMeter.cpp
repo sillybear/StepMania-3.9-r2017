@@ -65,11 +65,11 @@ void DifficultyMeter::Load()
 		if( FEET_PER_DIFFICULTY )
 		{
 			for( unsigned i = 0; i < NUM_DIFFICULTIES; ++i )
-				Feet += char(i + '0'); // 01234
-			Feet += 'X'; // Off
+				Feet += char(i + '1'); // 01234
+			Feet += '0'; // Off
 		}
 		else
-			Feet = "0X";
+			Feet = "0123";
 		m_textFeet.LoadFromTextureAndChars( THEME->GetPathG(m_sName,"bar"), Feet );
 		SET_XY_AND_ON_COMMAND( &m_textFeet );
 		this->AddChild( &m_textFeet );
@@ -172,8 +172,8 @@ void DifficultyMeter::SetFromMeterAndDifficulty( CString sMeter, Difficulty dc, 
 	{
 		int iMeter = atoi( sMeter );
 
-		CString on = "0";
-		CString off = "X";
+		CString on = "2";
+		CString off = "1";
 		if( FEET_PER_DIFFICULTY )
 			on = char(dc + '0');
 
@@ -189,9 +189,12 @@ void DifficultyMeter::SetFromMeterAndDifficulty( CString sMeter, Difficulty dc, 
 		}
 
 		for( f=0; f<NUM_FEET_IN_METER; f++ )
-			sNewText += (f<iMeter) ? on : off;
-		for( f=NUM_FEET_IN_METER; f<MAX_FEET_IN_METER && f<iMeter; f++ )
-			sNewText += on;
+		{
+			if( iMeter <= NUM_FEET_IN_METER )
+				sNewText += (f<iMeter) ? "2" : (iMeter != 0) ? "1" : "0";
+			else
+				sNewText += (f<(iMeter%NUM_FEET_IN_METER)) ? "3" : "2";
+		}
 
 		m_textFeet.SetText( sNewText );
 
