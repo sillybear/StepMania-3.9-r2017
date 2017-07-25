@@ -1,5 +1,6 @@
 #include "global.h"
 #include "NotesWriterSM.h"
+#include "StepsUtil.h"
 #include "Steps.h"
 #include "RageUtil.h"
 #include "GameManager.h"
@@ -284,7 +285,9 @@ bool NotesWriterSM::Write(CString sPath, const Song &out, bool bSavingCache )
 	//
 	// Save all Steps for this file
 	//
-	const vector<Steps*>& vpSteps = out.GetAllSteps();
+	vector<Steps*> vpSteps = out.GetAllSteps();
+	StepsUtil::SortStepsByTypeAndDifficulty( vpSteps );
+
 	for( i=0; i<vpSteps.size(); i++ ) 
 	{
 		const Steps* pSteps = vpSteps[i];

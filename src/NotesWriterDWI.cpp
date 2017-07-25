@@ -7,6 +7,7 @@
 #include "RageFile.h"
 #include "NoteDataUtil.h"
 #include "RageFile.h"
+#include "StepsUtil.h"
 
 static void write_tag( RageFile& f, CString const &format, CString const &value)
 {
@@ -415,7 +416,9 @@ bool NotesWriterDWI::Write( CString sPath, const Song &out )
 		write_tag( f, "#FREEZE:%s;", join(",", stopLines) );
 	}
 
-	const vector<Steps*>& vpSteps = out.GetAllSteps();
+	vector<Steps*> vpSteps = out.GetAllSteps();
+	StepsUtil::SortStepsByTypeAndDifficulty( vpSteps );
+
 	for( unsigned i=0; i<vpSteps.size(); i++ ) 
 	{
 		const Steps* pSteps = vpSteps[i];
