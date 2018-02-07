@@ -49,7 +49,8 @@ void NotesWriterSM::WriteGlobalTags( RageFile &f, const Song &out, bool bSavingC
 		write_tag( f, "#OFFSET:%s;", FormatDouble("%.3f", out.m_Timing.m_fBeat0OffsetInSeconds) );
 
 	write_tag( f, "#SAMPLESTART:%s;", FormatDouble("%.3f", out.m_fMusicSampleStartSeconds) );
-	write_tag( f, "#SAMPLELENGTH:%s;", FormatDouble("%.3f", out.m_fMusicSampleLengthSeconds) );
+	write_tag( f, "#SAMPLELENGTH:%s;", "15" );
+	//write_tag( f, "#SAMPLELENGTH:%s;", FormatDouble("%.3f", out.m_fMusicSampleLengthSeconds) );
 
 	switch(out.m_SelectionDisplay)
 	{
@@ -116,7 +117,7 @@ void NotesWriterSM::WriteGlobalTags( RageFile &f, const Song &out, bool bSavingC
 	}
 	write_tag( f, "#STOPS:%s;", join(",", stopLines) );
 
-	if( out.m_BackgroundChanges.size() )
+	if( out.m_BackgroundChanges.size() > 1 || (!out.m_BackgroundChanges.empty() && out.m_BackgroundChanges[0].m_fStartBeat != 0) )
 	{
 		f.Write( "#BGCHANGES:" );
 		for( unsigned i=0; i<out.m_BackgroundChanges.size(); i++ )
@@ -175,6 +176,7 @@ static void WriteLineList( RageFile &f, vector<CString> &lines, bool SkipLeading
 {
 	for( unsigned i = 0; i < lines.size(); ++i )
 	{
+		TrimLeft( lines[i] );
 		TrimRight( lines[i] );
 		if( SkipLeadingBlankLines )
 		{
@@ -221,14 +223,17 @@ void NotesWriterSM::WriteSMNotesTag( const Steps &in, RageFile &f, bool bSavingC
 	/* Don't append a newline here; it's added in NoteDataUtil::GetSMNoteDataString.
 	 * If we add it here, then every time we write unmodified data we'll add an extra
 	 * newline and they'll accumulate. */
-	f.Write( ssprintf( "     %s:", join(",",asRadarValues).c_str() ) );
+	f.Write( "     :" );
+	//f.Write( ssprintf( "     %s:", join(",",asRadarValues).c_str() ) );
+
+	f.PutLine( "" );
 
 	CString sNoteData;
 	CString sAttackData;
 	in.GetSMNoteData( sNoteData, sAttackData );
 
 	vector<CString> lines;
-
+	TrimLeft( sNoteData );
 	split( sNoteData, "\n", lines, false );
 	WriteLineList( f, lines, true, true );
 

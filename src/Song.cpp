@@ -1128,7 +1128,7 @@ void Song::Save()
 
 	/* Save the new files.  These calls make backups on their own. */
 	SaveToSMFile( GetSongFilePath(), false );
-	SaveToDWIFile();
+	//SaveToDWIFile();
 
 	//if( IsPlayerSong() )
 	//	SaveToPlayerCacheFile();
@@ -1161,8 +1161,8 @@ void Song::SaveToSMFile( CString sPath, bool bSavingCache )
 	LOG->Trace( "Song::SaveToSMFile('%s')", sPath.c_str() );
 
 	/* If the file exists, make a backup. */
-	if( !bSavingCache && IsAFile(sPath) )
-		FileCopy( sPath, sPath + ".old" );
+	//if( !bSavingCache && IsAFile(sPath) )
+	//	FileCopy( sPath, sPath + ".old" );
 
 	NotesWriterSM wr;
 	wr.Write(sPath, *this, bSavingCache);

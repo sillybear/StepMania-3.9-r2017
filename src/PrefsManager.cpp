@@ -89,7 +89,7 @@ void PrefsManager::Init()
 	m_fJudgeWindowAdd = 0;
 	m_fLifeDifficultyScale = 1.0f;
 
-	m_bNoSavePlusFeatures = false;
+	m_bNoSavePlusFeatures = true;
 	m_ConvertRatingsScaleDown = MTSCALE_OFF;
 
 	m_bPositiveAnnouncerOnly = false;
