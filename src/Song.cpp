@@ -1166,6 +1166,7 @@ void Song::SaveToSMFile( CString sPath, bool bSavingCache )
 
 	NotesWriterSM wr;
 	wr.Write(sPath, *this, bSavingCache);
+	FILEMAN->Remove( sPath + ".old" );
 }
 
 void Song::SaveToCacheFile()
@@ -1180,11 +1181,12 @@ void Song::SaveToDWIFile()
 	LOG->Trace( "Song::SaveToDWIFile(%s)", sPath.c_str() );
 
 	/* If the file exists, make a backup. */
-	if( IsAFile(sPath) )
-		FileCopy( sPath, sPath + ".old" );
+	//if( IsAFile(sPath) )
+	//	FileCopy( sPath, sPath + ".old" );
 
 	NotesWriterDWI wr;
 	wr.Write(sPath, *this);
+	FILEMAN->Remove( sPath + ".old" );
 }
 
 void Song::AddAutoGenNotes()
